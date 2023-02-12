@@ -1,10 +1,11 @@
-import React from "react";
+import React from 'react';
 import Header from '../Header/Header';
 import NoteBody from '../NoteBody/NoteBody';
 import Footer from '../Footer/Footer';
 import { getInitialData } from '../../utils/index';
-import { ToastContainer, toast } from 'react-toastify';
 
+// notify
+import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 
 class NoteApp extends React.Component {
@@ -73,8 +74,16 @@ class NoteApp extends React.Component {
     }
 
     onDeleteEventHandler(id) {
-        const notes = this.state.notes.filter(note => note.id !== id);
-        this.setState({ notes });
+        const confirm = window.confirm('Apakah Anda yakin ingin menghapusnya?');
+        if (confirm) {
+            const notes = this.state.notes.filter(note => note.id !== id);
+            const unfilteredNotes = this.state.unfilteredNotes.filter(note => note.id !== id);
+            this.setState({ notes });
+            this.setState({ unfilteredNotes });
+            toast.success('Notes terhapus!');
+        } else {
+            toast.error('Penghapusan dibatalkan!');
+        }
     }
 
     onSearchEventHandler(text) {
@@ -96,7 +105,7 @@ class NoteApp extends React.Component {
                 <NoteBody notes={this.state.notes} addNewNotes={this.onAddNewNotesEventHandler} onDelete={this.onDeleteEventHandler} onArchive={this.onArchivedEventHandler} />
                 <Footer />
                 <ToastContainer
-                    position="bottom-right"
+                    position='bottom-right'
                     autoClose={3000}
                     hideProgressBar={false}
                     newestOnTop={false}

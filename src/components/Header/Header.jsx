@@ -1,10 +1,10 @@
-import React from "react";
-import SearchBar from "../SearchBar/SearchBar";
+import React from 'react';
+import SearchBar from '../SearchBar/SearchBar';
 
 
 function Header({ onSearch }) {
     return (
-        <header className="note-app__header">
+        <header className='note-app__header'>
             <h1>Notes</h1>
             <SearchBar onSearch={onSearch} />
         </header>

@@ -1,11 +1,11 @@
-import React from "react";
-import NoteItem from "../NoteItem/NoteItem";
+import React from 'react';
+import NoteItem from '../NoteItem/NoteItem';
 
 function NoteList({ notes, onDelete, onArchive }) {
     return (
         <div>
             {notes.length !== 0 ?
-                <div className="notes-list">
+                <div className='notes-list'>
                     {
                         notes.map(note => (
                             <NoteItem
@@ -18,7 +18,7 @@ function NoteList({ notes, onDelete, onArchive }) {
                         ))
                     }
                 </div> :
-                <p className="notes-list__empty-message">Tidak ada catatan</p>
+                <p className='notes-list__empty-message'>Tidak ada catatan</p>
             }
         </div>
     )
