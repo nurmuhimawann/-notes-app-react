@@ -1,9 +1,9 @@
 import React from "react";
 
-function SearchBar() {
+function SearchBar({ onSearch }) {
     return (
         <div className="note-search">
-            <input id="search" placeholder="Search..." />
+            <input type="text" id="search" onChange={(event) => {onSearch(event.target.value)}} placeholder="Search..." />
         </div>
     )
 }

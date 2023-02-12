@@ -1,9 +1,9 @@
 import React from "react";
 import Header from '../Header/Header';
 import NoteBody from '../NoteBody/NoteBody';
+import Footer from '../Footer/Footer';
 import { getInitialData } from '../../utils/index';
 import { ToastContainer, toast } from 'react-toastify';
-import Footer from '../Footer/Footer';
 
 import 'react-toastify/dist/ReactToastify.min.css';
 
@@ -19,6 +19,7 @@ class NoteApp extends React.Component {
         this.onAddNewNotesEventHandler = this.onAddNewNotesEventHandler.bind(this);
         this.onArchivedEventHandler = this.onArchivedEventHandler.bind(this);
         this.onDeleteEventHandler = this.onDeleteEventHandler.bind(this);
+        this.onSearchEventHandler = this.onSearchEventHandler.bind(this);
     }
 
     onAddNewNotesEventHandler({ title, body }) {
@@ -26,6 +27,16 @@ class NoteApp extends React.Component {
             return {
                 notes: [
                     ...prevState.notes,
+                    {
+                        id: +new Date(),
+                        title,
+                        body,
+                        createdAt: new Date(),
+                        archived: false,
+                    }
+                ],
+                unfilteredNotes: [
+                    ...prevState.unfilteredNotes,
                     {
                         id: +new Date(),
                         title,
@@ -66,10 +77,22 @@ class NoteApp extends React.Component {
         this.setState({ notes });
     }
 
+    onSearchEventHandler(text) {
+        if (text.length !== 0 && text.trim() !== '') {
+            this.setState({
+                notes: this.state.unfilteredNotes.filter(note => note.title.toLowerCase().includes(text.toLowerCase())),
+            })
+        } else {
+            this.setState({
+                notes: this.state.unfilteredNotes,
+            })
+        }
+    }
+
     render() {
         return (
             <div>
-                <Header />
+                <Header onSearch={this.onSearchEventHandler} />
                 <NoteBody notes={this.state.notes} addNewNotes={this.onAddNewNotesEventHandler} onDelete={this.onDeleteEventHandler} onArchive={this.onArchivedEventHandler} />
                 <Footer />
                 <ToastContainer
