@@ -16,11 +16,27 @@ class NoteApp extends React.Component {
             unfilteredNotes: getInitialData()
         }
 
-        this.onDeleteEventHandler = this.onDeleteEventHandler.bind(this);
+        this.onAddNewNotesEventHandler = this.onAddNewNotesEventHandler.bind(this);
         this.onArchivedEventHandler = this.onArchivedEventHandler.bind(this);
+        this.onDeleteEventHandler = this.onDeleteEventHandler.bind(this);
     }
 
-    onAdd
+    onAddNewNotesEventHandler({ title, body }) {
+        this.setState((prevState) => {
+            return {
+                notes: [
+                    ...prevState.notes,
+                    {
+                        id: +new Date(),
+                        title,
+                        body,
+                        createdAt: new Date(),
+                        archived: false,
+                    }
+                ]
+            }
+        });
+    }
 
     onArchivedEventHandler(id) {
         const notes = this.state.unfilteredNotes.filter(note => note.id === id)[0];
@@ -52,9 +68,9 @@ class NoteApp extends React.Component {
 
     render() {
         return (
-            <React.Fragment>
+            <div>
                 <Header />
-                <NoteBody notes={this.state.notes} onDelete={this.onDeleteEventHandler} onArchive={this.onArchivedEventHandler} />
+                <NoteBody notes={this.state.notes} addNewNotes={this.onAddNewNotesEventHandler} onDelete={this.onDeleteEventHandler} onArchive={this.onArchivedEventHandler} />
                 <Footer />
                 <ToastContainer
                     position="bottom-right"
@@ -67,7 +83,7 @@ class NoteApp extends React.Component {
                     draggable
                     pauseOnHover
                 />
-            </React.Fragment>
+            </div>
         )
     }
 }
