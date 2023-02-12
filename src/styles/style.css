@@ -165,6 +165,13 @@ input::placeholder, textarea::placeholder {
   color: #b00020;
 }
 
+.notes-app__footer {
+  border-top: 1px solid #aaa;
+  margin-top: 50px;
+  padding: 30px;
+  text-align: center;
+}
+
 @media only screen and (min-width: 500px) {
   .notes-list {
     grid-template-columns: 1fr 1fr;
